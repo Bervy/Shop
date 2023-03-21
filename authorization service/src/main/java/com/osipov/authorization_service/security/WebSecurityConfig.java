@@ -51,7 +51,7 @@ public class WebSecurityConfig {
         authenticationManagerBuilder.jdbcAuthentication()
                 .dataSource(dataSource)
                 .passwordEncoder(NoOpPasswordEncoder.getInstance())
-                .usersByUsernameQuery("select email,password,active from users where email=?")
+                .usersByUsernameQuery("select email,password from users where email=?")
                 .authoritiesByUsernameQuery("select users.email,role.roles from users inner join role on users.id=role.id where users.email=?");
     }
 }
