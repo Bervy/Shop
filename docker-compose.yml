@@ -1,0 +1,31 @@
+version: '3.8'
+services:
+  main-server:
+    build: main server
+    container_name: main-server-container
+    ports:
+      - "8080:8080"
+    depends_on:
+      - main-server-db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://main-server-db:5432/shop
+
+  authorization-service:
+    build: authorization service
+    container_name:   authorization-service-container
+    ports:
+      - "9090:9090"
+    depends_on:
+      - main-server-db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://main-server-db:5432/shop
+
+  main-server-db:
+    image: postgres:13.7-alpine
+    container_name: effective-mobile-main-server-db_container
+    ports:
+      - "6542:5432"
+    environment:
+      - POSTGRES_DB=shop
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=123
